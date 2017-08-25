@@ -19,13 +19,7 @@ export class AppComponent {
   addMore: Array<any> = ['true'];
   haveMore: boolean = false;
   saved: Array<any> = [];
-  newChild: Array<any> = [
-                            {
-                              'firstName': '',
-                              'lastName': '',
-                              'id': this.counter
-                            }
-                          ];
+  newChild: Array<any> = [ {'firstName': '', 'lastName': ''} ];
 
   constructor(@Inject(AppStore) private store: Redux.Store<AppState>) {
     store.subscribe(() => this.readState());
@@ -51,19 +45,13 @@ export class AppComponent {
       this.saved[this.counter-1] = true;
       this.saved[this.counter] = true;
       this.haveMore = true;
-      this.store.dispatch(MainActions.addChild({ 'firstName': childName, 'lastName': childLastName, 'id': index }));
+      this.store.dispatch(MainActions.addChild({ 'firstName': childName, 'lastName': childLastName }));
     }
   }
 
   addMoreChild(haveMoreChild) {
     if (haveMoreChild === 'true') {
-        this.newChild = [
-                          {
-                            'firstName': '',
-                            'lastName': '',
-                            'id': this.counter
-                          }
-                        ];
+      this.newChild = [{'firstName': '', 'lastName': ''}];
       this.children = [ ...this.children, ...this.newChild ];
       this.addMore[this.counter] = true;
       this.saved[this.counter] = false;
@@ -71,11 +59,10 @@ export class AppComponent {
     }
   }
 
-  removeChild(index) {
-    if (index > -1) {
+  removeChild(firstName, lastName) {
+    if (firstName && lastName) {
       this.haveMore = true;
-      this.saved[this.counter] = false;
-      this.store.dispatch(MainActions.removeChild(index));
+      this.store.dispatch(MainActions.removeChild({'firstName': firstName, 'lastName': lastName}));
       if (this.counter === 0){
         this.haveChild = 'no';
       }

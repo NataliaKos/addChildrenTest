@@ -32,7 +32,7 @@
                 <span *ngIf="i === 2">Third Child</span>
                 <span *ngIf="i > 2">{{ i+1 }}<sup>th</sup> Child</span>
               </p>
-              <a class="remove-label" (click)="removeChild(i)">Remove</a>
+              <a class="remove-label" (click)="removeChild(children[i].firstName, children[i].lastName)">Remove</a>
             </div>
             <!-- Add child info -->
             <div class="module-input">
@@ -49,7 +49,7 @@
               <input type="text" 
                     class="field form-control mb-2 mr-sm-2 mb-sm-0" 
                     name="lastName{{i}}"
-                    [(ngModel)]="children[i].lastName"  
+                    [(ngModel)]="children[i].lastName"
                     value=''
                     required >
             </div>
@@ -58,7 +58,7 @@
         </div>
         <!-- Save and cansel buttons -->
         <div class="module-buttons" 
-              *ngIf="!saved[counter-1] || (!saved[counter] && addMore[counter])" 
+              *ngIf="!saved[counter-1] || (!saved[counter] && addMore[counter]) || counter === 0" 
               [ngClass]="{'grey-background' : !saved[counter] }">
           <button type="button" class="button button-cancel" (click)="cancel()">CANCEL</button>
           <button type="button" 
@@ -70,7 +70,7 @@
       </div>
     </div>
     <!-- Add more children question -->
-    <div class="col-sm-12 more-children" *ngIf="haveMore">
+    <div class="col-sm-12 more-children" *ngIf="haveMore && counter !== 0">
       <p class="text-question">Do you have any other children?</p>
       <div class="form-radio-buttons">
         <label class="text-label-radio-button">

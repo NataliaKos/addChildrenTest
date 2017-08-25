@@ -15,10 +15,9 @@ export const mainReducer: Reducer<AppState> =
           children: [...state.children, ...action.children ] 
         });
     case REMOVE_CHILD:
-    console.log(state.children, action.children)
       return Object.assign({}, { 
           counter: state.counter === 0 ? state.counter : state.counter-1,
-          children: state.children.filter(child => child.id !== action.children)
+          children: state.children.filter(child => (child.firstName !== action.children.firstName && child.lastName !== action.children.lastName) )
         });
     default:
       return state;
